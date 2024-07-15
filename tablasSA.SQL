@@ -1,45 +1,40 @@
--- Creación de la tabla rol
-CREATE TABLE rol (
-  id_rol int(11) NOT NULL AUTO_INCREMENT,
-  nombre varchar(255) NOT NULL,
-  PRIMARY KEY (id_rol)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE DATABASE p_verificacion;
 
--- Inserción de los roles específicos
-INSERT INTO rol (id_rol, nombre) VALUES
-(1, 'Secretaria'),
-(2, 'Docente');
+USE p_verificacion;
 
--- Creación de la tabla usuario
-CREATE TABLE usuario (
-  cedula varchar(15) NOT NULL,
-  nombre varchar(255) NOT NULL,
-  correo_electronico varchar(255) NOT NULL,
-  contraseña varchar(255) NOT NULL,
-  rol_id int(11) DEFAULT NULL,
-  PRIMARY KEY (cedula),
-  KEY fk_usuario_rol (rol_id),
-  CONSTRAINT fk_usuario_rol FOREIGN KEY (rol_id) REFERENCES rol (id_rol) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE Rol (
+    id_rol INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL
+);
 
+CREATE TABLE Usuario (
+    cedula VARCHAR(50) PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    correo_electronico VARCHAR(255) NOT NULL,
+    contraseña VARCHAR(255) NOT NULL,
+    rol_id INT,
+    FOREIGN KEY (rol_id) REFERENCES Rol(id_rol)
+);
 
-CREATE TABLE permisos (
-  id_permiso int(11) NOT NULL AUTO_INCREMENT,
-  -- otras columnas según sea necesario,
-  PRIMARY KEY (id_permiso)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE Permisos (
+    id_permiso INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_permiso VARCHAR(255) NOT NULL
+);
+INSERT INTO Rol (nombre) VALUES ('Docente'), ('Secretario');
 
+INSERT INTO Usuario (cedula, nombre, correo_electronico, contraseña, rol_id) VALUES
+('12345678', 'Juan Pérez', 'juan@example.com', 'contraseña', 1),
+('87654321', 'Ana Gómez', 'ana@example.com', 'contraseña', 2);
 
-CREATE TABLE roles_permisos (
-  id_rol int(11) NOT NULL,
-  id_permiso int(11) NOT NULL,
-  PRIMARY KEY (id_rol, id_permiso),
-  CONSTRAINT fk_roles_permisos_rol FOREIGN KEY (id_rol) REFERENCES rol (id_rol) ON DELETE CASCADE,
-  CONSTRAINT fk_roles_permisos_permisos FOREIGN KEY (id_permiso) REFERENCES permisos (id_permiso) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO Permisos (nombre_permiso) VALUES ('Ver Calificaciones'), ('Ingresar Calificaciones'), ('Ver Asistencia');
 
-
--- Inserción de usuarios de ejemplo con los nuevos roles
-INSERT INTO usuario (cedula, nombre, correo_electronico, contraseña, rol_id) VALUES
-('0931116255', 'Marcos Baya', 'davidbayas95@hotmail.com', 'contraseña123', 2),
-('2150337331', 'Maybeth Jimenez', 'mbayas@assist.com.uy', 'usuario456', 1);
+INSERT INTO Roles_Permisos (id_rol, id_permiso) VALUES
+(1, 2), -- Docente puede ingresar calificaciones
+(1, 1), -- Docente puede ver calificaciones
+(2, 3); -- Secretario puede ver asistencia
+CREATE TABLE Roles_Permisos (
+    id_rol INT,
+    id_permiso INT,
+    FOREIGN KEY (id_rol) REFERENCES Rol(id_rol),
+    FOREIGN KEY (id_permiso) REFERENCES Permisos(id_permiso)
+);
