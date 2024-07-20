@@ -38,3 +38,25 @@ CREATE TABLE Roles_Permisos (
     FOREIGN KEY (id_rol) REFERENCES Rol(id_rol),
     FOREIGN KEY (id_permiso) REFERENCES Permisos(id_permiso)
 );
+
+create table Cursos(
+id_Curso int primary Key AUTO_INCREMENT,
+Curso varchar(255) not null,
+Materia varchar(255) not null,
+Docente varchar (255) not null,
+Horario varchar(255) not null,
+id_nivel int,
+FOREIGN KEY (id_nivel) REFERENCES Nivel(id_nivel)
+);
+create table Matricula(
+id_matricula int AUTO_INCREMENT PRIMARY KEY,
+cedula_usuario VARCHAR(50),
+id_cursos int,
+FOREIGN KEY (cedula_usuario) REFERENCES Usuario(cedula),
+FOREIGN KEY (id_cursos) References Cursos(id_Curso)
+);
+
+create table nivel(
+id_nivel int primary key auto_increment,
+ nombre nvarchar(50)
+);
