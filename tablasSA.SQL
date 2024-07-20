@@ -15,7 +15,21 @@ CREATE TABLE Usuario (
     rol_id INT,
     FOREIGN KEY (rol_id) REFERENCES Rol(id_rol)
 );
+INSERT INTO Usuario (cedula, nombre, correo_electronico, contrasena, rol_id) VALUES 
+('2233445566', 'Ana Gómez', 'ana@example.com', 'passwordabc', 3),
+('3344556677', 'Pedro Martínez', 'pedro@example.com', 'passworddef', 3);
 
+CREATE TABLE Insumos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id VARCHAR(50),
+    insumo1 INT DEFAULT 0,
+    insumo2 INT DEFAULT 0,
+    insumo3 INT DEFAULT 0,
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(cedula)
+);
+INSERT INTO Insumos (usuario_id, insumo1, insumo2, insumo3) VALUES 
+('2233445566', 15, 25, 35),
+('3344556677', 20, 30, 40);
 CREATE TABLE Permisos (
     id_permiso INT AUTO_INCREMENT PRIMARY KEY,
     nombre_permiso VARCHAR(255) NOT NULL
