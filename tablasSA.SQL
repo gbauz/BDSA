@@ -74,3 +74,8 @@ create table nivel(
 id_nivel int primary key auto_increment,
  nombre nvarchar(50)
 );
+
+INSERT INTO Rol (nombre) VALUES ('Estudiante')
+
+INSERT INTO Usuario (cedula, nombre, correo_electronico, contraseña, rol_id) VALUES
+('0950741306', 'Bruno BAQUE', 'BRUNO@baque.com', '12345', 3),
