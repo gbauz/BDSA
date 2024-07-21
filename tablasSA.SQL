@@ -15,6 +15,8 @@ CREATE TABLE Usuario (
     rol_id INT,
     FOREIGN KEY (rol_id) REFERENCES Rol(id_rol)
 );
+INSERT INTO rol (nombre) VALUES ('Estudiante');
+
 INSERT INTO Usuario (cedula, nombre, correo_electronico, contraseña, rol_id) VALUES 
 ('2233445566', 'Ana Gómez', 'ana@example.com', 'passwordabc', 3),
 ('3344556677', 'Pedro Martínez', 'pedro@example.com', 'passworddef', 3);
