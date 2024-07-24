@@ -15,11 +15,6 @@ CREATE TABLE Usuario (
     rol_id INT,
     FOREIGN KEY (rol_id) REFERENCES Rol(id_rol)
 );
-INSERT INTO rol (nombre) VALUES ('Estudiante');
-
-INSERT INTO Usuario (cedula, nombre, correo_electronico, contraseña, rol_id) VALUES 
-('2233445566', 'Ana Gómez', 'ana@example.com', 'passwordabc', 3),
-('3344556677', 'Pedro Martínez', 'pedro@example.com', 'passworddef', 3);
 
 CREATE TABLE Insumos (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -29,25 +24,12 @@ CREATE TABLE Insumos (
     insumo3 INT DEFAULT 0,
     FOREIGN KEY (usuario_id) REFERENCES Usuario(cedula)
 );
-INSERT INTO Insumos (usuario_id, insumo1, insumo2, insumo3) VALUES 
-('2233445566', 15, 25, 35),
-('3344556677', 20, 30, 40);
+
 CREATE TABLE Permisos (
     id_permiso INT AUTO_INCREMENT PRIMARY KEY,
     nombre_permiso VARCHAR(255) NOT NULL
 );
-INSERT INTO Rol (nombre) VALUES ('Docente'), ('Secretario');
 
-INSERT INTO Usuario (cedula, nombre, correo_electronico, contraseña, rol_id) VALUES
-('12345678', 'Juan Pérez', 'juan@example.com', 'contraseña', 1),
-('87654321', 'Ana Gómez', 'ana@example.com', 'contraseña', 2);
-
-INSERT INTO Permisos (nombre_permiso) VALUES ('Ver Calificaciones'), ('Ingresar Calificaciones'), ('Ver Asistencia');
-
-INSERT INTO Roles_Permisos (id_rol, id_permiso) VALUES
-(1, 2), -- Docente puede ingresar calificaciones
-(1, 1), -- Docente puede ver calificaciones
-(2, 3); -- Secretario puede ver asistencia
 CREATE TABLE Roles_Permisos (
     id_rol INT,
     id_permiso INT,
@@ -55,29 +37,60 @@ CREATE TABLE Roles_Permisos (
     FOREIGN KEY (id_permiso) REFERENCES Permisos(id_permiso)
 );
 
-create table Cursos(
-id_Curso int primary Key AUTO_INCREMENT,
-Curso varchar(255) not null,
-Materia varchar(255) not null,
-Docente varchar (255) not null,
-Horario varchar(255) not null,
-id_nivel int,
-FOREIGN KEY (id_nivel) REFERENCES Nivel(id_nivel)
-);
-create table Matricula(
-id_matricula int AUTO_INCREMENT PRIMARY KEY,
-cedula_usuario VARCHAR(50),
-id_cursos int,
-FOREIGN KEY (cedula_usuario) REFERENCES Usuario(cedula),
-FOREIGN KEY (id_cursos) References Cursos(id_Curso)
+CREATE TABLE Nivel (
+    id_nivel INT PRIMARY KEY AUTO_INCREMENT,
+    nombre NVARCHAR(50)
 );
 
-create table nivel(
-id_nivel int primary key auto_increment,
- nombre nvarchar(50)
+CREATE TABLE Cursos (
+    id_Curso INT PRIMARY KEY AUTO_INCREMENT,
+    Curso VARCHAR(255) NOT NULL,
+    Materia VARCHAR(255) NOT NULL,
+    Docente VARCHAR(255) NOT NULL,
+    Horario VARCHAR(255) NOT NULL,
+    id_nivel INT,
+    FOREIGN KEY (id_nivel) REFERENCES Nivel(id_nivel)
 );
 
-INSERT INTO Rol (nombre) VALUES ('Estudiante')
+CREATE TABLE Matricula (
+    id_matricula INT AUTO_INCREMENT PRIMARY KEY,
+    cedula_usuario VARCHAR(50),
+    id_cursos INT,
+    FOREIGN KEY (cedula_usuario) REFERENCES Usuario(cedula),
+    FOREIGN KEY (id_cursos) REFERENCES Cursos(id_Curso)
+);
 
-INSERT INTO Usuario (cedula, nombre, correo_electronico, contraseña, rol_id) VALUES
-('0950741306', 'Bruno BAQUE', 'BRUNO@baque.com', '12345', 3),
+-- Insertar datos
+INSERT INTO Rol (nombre) VALUES ('Estudiante'), ('Docente'), ('Secretario');
+
+INSERT INTO Usuario (cedula, nombre, correo_electronico, contraseña, rol_id) VALUES 
+('2233445566', 'Ana Gómez', 'ana@example.com', 'passwordabc', 3),
+('3344556677', 'Pedro Martínez', 'pedro@example.com', 'passworddef', 3),
+('12345678', 'Juan Pérez', 'juan@example.com', 'contraseña', 1),
+('87654321', 'Ana Gómez', 'ana@example.com', 'contraseña', 2),
+('0950741306', 'Bruno BAQUE', 'BRUNO@baque.com', '12345', 3);
+
+INSERT INTO Insumos (usuario_id, insumo1, insumo2, insumo3) VALUES 
+('2233445566', 15, 25, 35),
+('3344556677', 20, 30, 40);
+
+INSERT INTO Permisos (nombre_permiso) VALUES 
+('Ver Calificaciones'), ('Ingresar Calificaciones'), ('Ver Asistencia');
+
+INSERT INTO Roles_Permisos (id_rol, id_permiso) VALUES
+(1, 2), -- Docente puede ingresar calificaciones
+(1, 1), -- Docente puede ver calificaciones
+(2, 3); -- Secretario puede ver asistencia
+
+INSERT INTO Nivel (nombre) VALUES 
+('Nivel 1'),
+('Nivel 2'),
+('Nivel 3');
+
+INSERT INTO Cursos (Curso, Materia, Docente, Horario, id_nivel) VALUES 
+('1-1', 'Grammar', 'Ana Torres', 'Lunes 10:00-12:00', 1),
+('2-1', 'Listening', 'Carlos Méndez', 'Martes 14:00-16:00', 1),
+('3-1', 'Speaking', 'Laura Fernández', 'Miércoles 09:00-11:00', 2),
+('1-2', 'Grammar', 'Jorge López', 'Jueves 11:00-13:00', 2),
+('2-2', 'Listening', 'Marta García', 'Viernes 15:00-17:00', 3),
+('3-2', 'Speaking', 'Luis Pérez', 'Sábado 10:00-12:00', 3);
