@@ -68,11 +68,17 @@ INSERT INTO Usuario (cedula, nombre, correo_electronico, contraseña, rol_id) VA
 ('3344556677', 'Pedro Martínez', 'pedro@example.com', 'passworddef', 3),
 ('12345678', 'Juan Pérez', 'juan@example.com', 'contraseña', 1),
 ('87654321', 'Ana Gómez', 'ana@example.com', 'contraseña', 2),
+('0951995240', 'Paul Rizo', 'paul@gmail.com', '123', 3),
+('0955308374', 'Josue', 'josue@gmail.com', '123', 3),
 ('0950741306', 'Bruno BAQUE', 'BRUNO@baque.com', '12345', 3);
 
 INSERT INTO Insumos (usuario_id, insumo1, insumo2, insumo3) VALUES 
 ('2233445566', 15, 25, 35),
-('3344556677', 20, 30, 40);
+('3344556677', 20, 30, 40),
+('0955308374', 10, 10, 10),
+('0951995240', 10, 5, 10);
+
+
 
 INSERT INTO Permisos (nombre_permiso) VALUES 
 ('Ver Calificaciones'), ('Ingresar Calificaciones'), ('Ver Asistencia');
@@ -94,3 +100,6 @@ INSERT INTO Cursos (Curso, Materia, Docente, Horario, id_nivel) VALUES
 ('1-2', 'Grammar', 'Jorge López', 'Jueves 11:00-13:00', 2),
 ('2-2', 'Listening', 'Marta García', 'Viernes 15:00-17:00', 3),
 ('3-2', 'Speaking', 'Luis Pérez', 'Sábado 10:00-12:00', 3);
+INSERT INTO Matricula (id_matricula, cedula_usuario, id_cursos) VALUES
+(1, '0955308374', 2),
+(2, '0951995240', 3);
